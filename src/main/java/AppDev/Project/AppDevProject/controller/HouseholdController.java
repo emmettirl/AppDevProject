@@ -1,12 +1,14 @@
 package AppDev.Project.AppDevProject.controller;
 
+
 import AppDev.Project.AppDevProject.model.Household;
 import AppDev.Project.AppDevProject.service.HouseholdService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 import java.util.Optional;
+
 @RestController
 @RequestMapping("/households")
 public class HouseholdController {
@@ -32,11 +34,13 @@ public class HouseholdController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Household createHousehold(@RequestBody Household household) {
         return householdService.createHousehold(household);
     }
 
     @DeleteMapping("/{eircode}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteHousehold(@PathVariable String eircode) {
         householdService.deleteHouseholdById(eircode);
     }

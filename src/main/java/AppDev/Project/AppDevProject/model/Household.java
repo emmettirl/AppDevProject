@@ -1,7 +1,7 @@
 package AppDev.Project.AppDevProject.model;
 
 
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -26,5 +26,7 @@ public class Household {
     private boolean ownerOccupied;
 
     @OneToMany(mappedBy = "household", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Pet> pets;
 }
+

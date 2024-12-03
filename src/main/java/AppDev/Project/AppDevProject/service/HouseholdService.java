@@ -5,7 +5,7 @@ import AppDev.Project.AppDevProject.model.Household;
 import AppDev.Project.AppDevProject.repository.HouseholdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import AppDev.Project.AppDevProject.exception.ResourceNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,7 @@ public class HouseholdService {
     }
 
     public Optional<Household> readHouseholdById(String eircode) {
-        return householdRepository.findById(eircode);
+        return Optional.ofNullable(householdRepository.findById(eircode).orElseThrow(() -> new ResourceNotFoundException("Household not found with eircode: " + eircode)));
     }
 
     public Household createHousehold(Household household) {
@@ -36,6 +36,9 @@ public class HouseholdService {
     }
 
     public void deleteHouseholdById(String eircode) {
+        if (!householdRepository.existsById(eircode)) {
+            throw new ResourceNotFoundException("Household not found with eircode: " + eircode);
+        }
         householdRepository.deleteById(eircode);
     }
 }
