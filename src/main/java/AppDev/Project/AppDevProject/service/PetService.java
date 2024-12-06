@@ -2,6 +2,7 @@ package AppDev.Project.AppDevProject.service;
 
 
 
+
 import AppDev.Project.AppDevProject.exception.ResourceNotFoundException;
 import AppDev.Project.AppDevProject.model.Pet;
 import AppDev.Project.AppDevProject.repository.PetRepository;
@@ -30,6 +31,16 @@ public class PetService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Pet createPet(Pet pet) {
+        return petRepository.save(pet);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    public Pet updatePet(Long id, Pet petDetails) {
+        Pet pet = petRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pet not found with id: " + id));
+        pet.setName(petDetails.getName());
+        pet.setAnimalType(petDetails.getAnimalType());
+        pet.setBreed(petDetails.getBreed());
+        pet.setAge(petDetails.getAge());
         return petRepository.save(pet);
     }
 

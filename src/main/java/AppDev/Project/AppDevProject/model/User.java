@@ -4,10 +4,12 @@ package AppDev.Project.AppDevProject.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +24,4 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 }
-
 

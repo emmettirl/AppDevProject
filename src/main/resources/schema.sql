@@ -1,16 +1,38 @@
-CREATE TABLE IF NOT EXISTS household (
-    eircode VARCHAR(255) PRIMARY KEY,
-    number_occupants INT NOT NULL,
-    max_occupants INT NOT NULL,
-    owner_occupied BOOLEAN NOT NULL
+-- Create Roles Table
+CREATE TABLE IF NOT EXISTS role (
+                                    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                    name VARCHAR(255) NOT NULL
     );
 
+-- Create Users Table
+CREATE TABLE IF NOT EXISTS users (
+                                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                     username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    enabled BOOLEAN NOT NULL
+    );
+
+-- Create User-Roles Relationship Table
+CREATE TABLE IF NOT EXISTS user_roles (
+                                          user_id BIGINT NOT NULL,
+                                          role_id BIGINT NOT NULL,
+                                          FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES role(id)
+    );
+
+-- Create Pets Table
 CREATE TABLE IF NOT EXISTS pet (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    animal_type VARCHAR(255) NOT NULL,
-    breed VARCHAR(255) NOT NULL,
-    age INT NOT NULL,
-    household_eircode VARCHAR(255),
-    CONSTRAINT fk_household FOREIGN KEY (household_eircode) REFERENCES household (eircode)
+                                   id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                   name VARCHAR(255) NOT NULL,
+    animal_type VARCHAR(255),
+    breed VARCHAR(255),
+    age INT
+    );
+
+-- Create Households Table
+CREATE TABLE IF NOT EXISTS household (
+                                         eircode VARCHAR(255) PRIMARY KEY,
+    number_occupants INT,
+    max_occupants INT,
+    owner_occupied BOOLEAN
     );
