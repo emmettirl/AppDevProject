@@ -1,12 +1,17 @@
 package AppDev.Project.AppDevProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "pet")
 
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +31,7 @@ public class Pet {
 
     @ManyToOne
     @JoinColumn(name = "household_eircode")
+    @JsonBackReference
     private Household household;
 
     // Constructor for name, animalType, and breed
@@ -35,6 +41,4 @@ public class Pet {
         this.breed = breed;
     }
 
-    public Pet() {
-    }
 }

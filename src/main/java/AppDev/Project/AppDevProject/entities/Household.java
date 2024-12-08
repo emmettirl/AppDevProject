@@ -1,5 +1,6 @@
 package AppDev.Project.AppDevProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -22,5 +23,6 @@ public class Household {
     private boolean ownerOccupied;
 
     @OneToMany(mappedBy = "household", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Pet> pets;
 }
