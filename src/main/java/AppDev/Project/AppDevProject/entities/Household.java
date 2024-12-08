@@ -5,9 +5,9 @@ import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "household")
-@Data
 public class Household {
     @Id
     private String eircode;
